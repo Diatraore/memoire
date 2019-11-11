@@ -1,0 +1,59 @@
+@layout('layouts.app')
+
+
+    @section('content')
+    <div class="container-fluid">
+      <div id="content-wrapper">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="#">Liste</a>
+            </li>
+            <li class="breadcrumb-item active">Representants</li>
+          </ol>
+        <a href="{{route('representant.create')}}" class="btn btn-primary">+ Representant</a>
+          
+          <div class="card mb-3">
+            <div class="card-header">
+                <i class="fas fa-table"></i>
+                
+            </div>
+            
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nom</th>
+                                    <th>Telephone</th>
+                                    <th>Mail</th>
+                                    <th>Fonction</th>
+                                    <th>Client</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @each(rep in representants)
+                                <tr>
+                                    <td>{{rep.id}}</td>
+                                    <td>{{rep.nom}}</td>
+                                    <td>{{rep.tel}}</td>
+                                    <td>{{rep.mail}}</td>
+                                    <td>{{rep.fonction}}</td>
+                                    <td>{{rep.clients}}</td>
+                                <td>
+                                    <a class="btn btn-primary" href="/representant/{{rep.id}}/edit">Modifier</a>
+                                    <a class="btn btn-danger" href="/representant/{{rep.id}}/delete">Supprimer</a>
+                                </td>
+                                
+                                </tr>
+                                @endeach
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    @endsection
+

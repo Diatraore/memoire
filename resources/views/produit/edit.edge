@@ -1,0 +1,52 @@
+@layout('layouts.app')
+
+@section('content')
+<div class="container-fluid">
+        <div id="content-wrapper">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h2>Modification d'un produit</h2>
+                </div>
+                <div class="card-body">
+                <form action="/produit/{{produit.id}}?_method=PUT" method="post">
+                          {{ csrfField() }}
+                         
+
+                          @if(flashMessage('error'))
+                            
+                          @endif
+                          @each(prod in produit)
+                          <div class="form-group">
+                                <label for="id">Id</label>
+                                <input type="text" name="id" id="id" class="form-control" value="{{prod.id}}" readonly>
+                            </div>
+                          <div class="form-group">
+                                  <label for="nom">Nom</label>
+                          <input type="text" name="nom" id="nom" class="form-control" value="{{prod.nom}}">
+                          </div>
+                          <div class="form-group">
+                                <label for="description">Description</label>
+                        <input type="text" name="description" id="description" class="form-control" value="{{prod.desc}}">
+                        </div>
+                        <div class="form-group">
+                                <label for="prix">Prix</label>
+                        <input type="text" name="prix" id="prix" class="form-control" value="{{prod.prix}}">
+                        </div>
+
+                        <div class="form-group">
+                                <label for="categorie">categorie</label>
+                                <select class="form-control" name="categorie" id="categorie">
+                                        @each(cat in categories)
+                                    <option value="{{cat.id}}">{{cat.nom}}</option>
+                                    @endeach
+                                </select>
+                        </div>
+                          @endeach
+                          <button class="btn btn-primary" type="submit">Enregistrer</button>
+                          <a class="btn btn-secondary" href="{{route('produits.list')}}">Annuler</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

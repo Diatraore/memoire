@@ -1,0 +1,61 @@
+@layout('layouts.app')
+
+
+    @section('content')
+    <div class="container-fluid">
+      <div id="content-wrapper">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="#">Liste</a>
+            </li>
+            <li class="breadcrumb-item active">Clients</li>
+          </ol>
+        <a href="{{route('client.create')}}" class="btn btn-primary">+ Client</a>
+          
+          <div class="card mb-3">
+            <div class="card-header">
+                <i class="fas fa-table"></i>
+                
+            </div>
+            
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nom</th>
+                                    <th>Telephone</th>
+                                    <th>Mail</th>
+                                    <th>Adresse localisation</th>
+                                    <th>Site web</th>
+                                    <th>Statut client</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @each(cli in clients)
+                                <tr>
+                                    <td>{{cli.id}}</td>
+                                    <td>{{cli.nom}}</td>
+                                    <td>{{cli.tel}}</td>
+                                    <td>{{cli.mail}}</td>
+                                    <td>{{cli.adr}}</td>
+                                    <td>{{cli.web}}</td>
+                                    <td>{{cli.statut}}</td>
+                                <td>
+                                    <a class="btn btn-primary" href="/client/{{cli.id}}/edit">Modifier</a>
+                                    <a class="btn btn-danger" href="/client/{{cli.id}}/delete">Supprimer</a>
+                                </td>
+                                
+                                </tr>
+                                @endeach
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    @endsection
+

@@ -1,0 +1,52 @@
+@layout('layouts.app')
+
+@section('content')
+<div class="container-fluid">
+        <div id="content-wrapper">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h2>Modification un rendez-vous</h2>
+                </div>
+                <div class="card-body">
+                <form action="/rendez_vous/{{rendez_vous.id}}?_method=PUT" method="post">
+
+                          {{ csrfField() }}
+                         
+
+                          @if(flashMessage('error'))
+                            
+                          @endif
+                          <div class="form-group">
+                                <label for="id">Id</label>
+                                <input type="text" name="id" id="id" class="form-control" value="{{rendez_vous.id}}" readonly>
+                            </div>
+                          <div class="form-group">
+                                  <label for="date_heure">Date et heure</label>
+                          <input type="datetime-local" name="date_heure" id="date_heure" class="form-control" value="{{rendez_vous.nadiaDate}}">
+                          </div>
+                          <div class="form-group">
+                                <label for="lieu">Lieu</label>
+                        <input type="text" name="lieu" id="lieu" class="form-control" value="{{rendez_vous.lieu}}">
+                        </div>
+        
+
+                        <div class="form-group">
+                                <label for="client">Clients</label>
+                                <select class="form-control" name="client" id="client">
+                                        @each(cli in clients)
+                                        @if(cli.id == rendez_vous.client_id)
+                                <option value="{{cli.id}}" selected="selected">{{cli.nom}}| {{rendez_vous.client_id}} || {{cli.id}}</option>
+                                        @else
+                                        <option value="{{cli.id}}" >{{cli.nom}}| {{rendez_vous.client_id}} || {{cli.id}}</option>
+                                        @endif
+                                    @endeach
+                                </select>
+                        </div>
+                          <button class="btn btn-primary" type="submit">Enregistrer</button>
+                          <a class="btn btn-secondary" href="{{route('rendez_vous.list')}}">Annuler</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

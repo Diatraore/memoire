@@ -1,0 +1,64 @@
+@layout('layouts.app')
+
+
+    @section('content')
+    <div class="container-fluid">
+      <div id="content-wrapper">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="#">Liste</a>
+            </li>
+            <li class="breadcrumb-item active">produits</li>
+          </ol>
+        <a href="{{route('produit.create')}}" class="btn btn-primary">+ Produit</a>
+          
+          <div class="card mb-3">
+            <div class="card-header">
+                <i class="fas fa-table"></i>
+                
+            </div>
+            
+            <div class="card-body">
+                <div class="table-responsive">
+                @if(produits)
+                    <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nom</th>
+                                    <th>Description</th>
+                                    <th>Prix</th>
+                                    <th>Categorie</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                    
+                                    @each(prod in produits)
+                                    <tr>
+                                        <td>{{prod.id}}</td>
+                                        <td>{{prod.nom}}</td>
+                                        <td>{{prod.desc}}</td>
+                                        <td>{{prod.prix}}</td>
+                                        <td>{{prod.categorie}}</td>
+                                    <td>
+                                        <a class="btn btn-primary" href="/produit/{{prod.id}}/edit">Modifier</a>
+                                        <a class="btn btn-danger" href="/produit/{{prod.id}}/delete">Supprimer</a>
+                                    </td>
+                                    
+                                    </tr>
+                                    @endeach
+                                    
+                                </tbody>         
+                    </table>
+                    @else
+                        Aucun produit disponible
+                    @endif
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    @endsection
+

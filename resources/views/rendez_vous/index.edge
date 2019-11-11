@@ -1,0 +1,63 @@
+@layout('layouts.app')
+
+
+    @section('content')
+    <div class="container-fluid">
+      <div id="content-wrapper">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="#">Liste</a>
+            </li>
+            <li class="breadcrumb-item active">Rendez-vous</li>
+          </ol>
+        <a href="{{route('rendez_vous.create')}}" class="btn btn-primary">+ Rendez-vous</a>
+          
+          <div class="card mb-3">
+            <div class="card-header">
+                <i class="fas fa-table"></i>
+                
+            </div>
+            
+            <div class="card-body">
+                <div class="table-responsive">
+                @if(rendez_vous)
+                    <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Date et heure</th>
+                                    <th>Lieu</th>
+                                    <th>Nom du client</th>
+                                    
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                    
+                                    @each(rdv in rendez_vous)
+                                    <tr>
+                                        <td>{{rdv.id}}</td>
+                                        <td>{{rdv.nadiaDate}}</td>
+                                        <td>{{rdv.lieu}}</td>
+                                        <td>{{rdv.client}}</td>
+                                    <td>
+                                        <a class="btn btn-primary" href="/rdv/{{rdv.id}}/edit">Modifier</a>
+                                        <a class="btn btn-danger" href="/rdv/{{rdv.id}}/delete">Supprimer</a>
+                                    </td>
+                                    
+                                    </tr>
+                                    @endeach
+                                    
+                                </tbody>         
+                    </table>
+                    @else
+                        Aucun rendez-vous pour le moment
+                    @endif
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    @endsection
+

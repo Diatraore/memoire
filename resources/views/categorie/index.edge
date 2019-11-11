@@ -1,0 +1,51 @@
+@layout('layouts.app')
+
+
+    @section('content')
+    <div class="container-fluid">
+      <div id="content-wrapper">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="#">Liste</a>
+            </li>
+            <li class="breadcrumb-item active">categories</li>
+          </ol>
+        <a href="{{route('categorie.create')}}" class="btn btn-primary">+ Categorie</a>
+          
+          <div class="card mb-3">
+            <div class="card-header">
+                <i class="fas fa-table"></i>
+                
+            </div>
+            
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nom</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @each(cat in categories)
+                                <tr>
+                                    <td>{{cat.id}}</td>
+                                    <td>{{cat.nom}}</td>
+                                <td>
+                                    <a class="btn btn-primary" href="/categorie/{{cat.id}}/edit">Modifier</a>
+                                    <a class="btn btn-danger" href="/categorie/{{cat.id}}/delete">Supprimer</a>
+                                </td>
+                                
+                                </tr>
+                                @endeach
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    @endsection
+

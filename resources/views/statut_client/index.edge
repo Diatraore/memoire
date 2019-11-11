@@ -1,0 +1,51 @@
+@layout('layouts.app')
+
+
+    @section('content')
+    <div class="container-fluid">
+      <div id="content-wrapper">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="#">Liste</a>
+            </li>
+            <li class="breadcrumb-item active">Statut client</li>
+          </ol>
+        <a href="{{route('statut_client.create')}}" class="btn btn-primary">+ statut</a>
+          
+          <div class="card mb-3">
+            <div class="card-header">
+                <i class="fas fa-table"></i>
+                
+            </div>
+            
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nom</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @each(statut in statut_clients)
+                                <tr>
+                                    <td>{{statut.id}}</td>
+                                    <td>{{statut.nom}}</td>
+                                <td>
+                                    <a class="btn btn-primary" href="/statut_client/{{statut.id}}/edit">Modifier</a>
+                                    <a class="btn btn-danger" href="/statut_client/{{statut.id}}/delete">Supprimer</a>
+                                </td>
+                                
+                                </tr>
+                                @endeach
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    @endsection
+

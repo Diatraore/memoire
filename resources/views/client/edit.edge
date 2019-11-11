@@ -1,0 +1,170 @@
+@layout('layouts.app')
+
+@section('content')
+<div class="container-fluid">
+        <div id="content-wrapper">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h2>Modification des coordonnées d'un client</h2>
+                </div>
+                <div class="card-body">
+                <form action="/client/{{client.id}}?_method=PUT" method="post">
+                          {{ csrfField() }}
+                         
+
+                          @if(flashMessage('error'))
+                            
+                          @endif
+                          @each(cli in client)
+                          {{cli.statut}}
+                          <div class="form-group">
+                                <label for="id">Id</label>
+                                <input type="text" name="id" id="id" class="form-control" value="{{cli.id}}" readonly>
+                            </div>
+                          <div class="form-group">
+                                  <label for="nom">Nom</label>
+                          <input type="text" name="nom" id="nom" class="form-control" value="{{cli.nom}}">
+                          </div>
+                          <div class="form-group">
+                                <label for="telephone">Telephone</label>
+                        <input type="text" name="telephone" id="telephone" class="form-control" value="{{cli.tel}}">
+                        </div>
+                        <div class="form-group">
+                                <label for="mail">Mail</label>
+                        <input type="text" name="Mail" id="Mail" class="form-control" value="{{cli.mail}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="web">Site web</label>
+                    <input type="text" name="web" id="web" class="form-control" value="{{cli.web}}">
+                    </div>
+
+                        <div class="form-group">
+                                <label for="statut_client">Statut client</label>
+                                <select class="form-control" name="statut_client" id="statut_client">
+                                        @each(stat in statut_clients)
+                                    <option value="{{stat.id}}">{{stat.nom}}</option>
+                                    @endeach
+                                </select>
+                        </div>
+                          @endeach
+                          <button class="btn btn-primary" type="submit">Enregistrer</button>
+                          <a class="btn btn-secondary" href="{{route('clients.list')}}">Annuler</a>
+                    </form>
+
+                    <fieldset >
+                        <hr style="border:1px solid #F2F3F4">
+                        <h4>Representants</h4>
+                            <button type="button" class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">+ Representant</button>
+                        <table class="table table-bordered">
+
+
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nom</th>
+                                    <th>Telephone</th>
+                                    <th>Mail</th>
+                                    <th>Fonction</th>
+                                    <th>Client</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @each(rep in representants)
+                                <tr>
+                                    <td>{{rep.id}}</td>
+                                    <td>{{rep.nom}}</td>
+                                    <td>{{rep.tel}}</td>
+                                    <td>{{rep.mail}}</td>
+                                    <td>{{rep.fonction}}</td>
+                                    
+                                <td>
+                                    <a class="btn btn-primary" href="/representant/{{rep.id}}/edit">Modifier</a>
+                                    <a class="btn btn-danger" href="/representant/{{rep.id}}/delete">Supprimer</a>
+                                </td>
+                                
+                                </tr>
+                                @endeach
+                            </tbody>
+                        </table>
+                    </fieldset>
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Formulaire representant</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <form id="repform" name="repform" action="/representant" method="POST">
+                                        {{ csrfField() }}
+                                        <div>
+                                            @each(cli in client)
+                                            <input type="hidden" name="client" value="{{cli.id}}">
+                                            @endeach
+                                        </div>
+                                        <div class="form-group">
+                                                <label for="nom" class="col-form-label">Nom:</label>
+                                                <input type="text" class="form-control" id="nom" name='nom'>
+                                              </div>
+          
+                                              <div class="form-group">
+                                                <label for="tel" class="col-form-label">Telephone:</label>
+                                                <input type="text" class="form-control" id="tel" name='telephone'>
+                                              </div>
+          
+                                              <div class="form-group">
+                                                      <label for="email" class="col-form-label">Mail:</label>
+                                                      <input type="text" class="form-control" id="email" name='mail'>
+                                              </div>
+          
+                                               <div class="form-group">
+                                                      <label for="adr" class="col-form-label">Adresse:</label>
+                                                      <input type="text" class="form-control" id="adr" name='adr'>
+                                              </div>
+                                              <div class="form-group">
+                                                          <label for="fonction" class="col-form-label">Fonction:</label>
+                                                          <input type="text" class="form-control" id="fonction" name='fonction'>
+                                               </div>
+                                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                               <button type="submit" class="btn btn-primary">Valider</button>     
+                                  </form>
+                                </div>
+                               
+                              </div>
+                            </div>
+                          </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('script')
+  <script>
+
+      $('#ajaxsubmit').click(function(e) {
+          e.preventDefault();
+        
+          var request = $.ajax({
+          url: '/representant',
+          type: 'post',
+          headers: {
+              'x-csrf-token': $('[name=_csrf]').val()
+            },
+            data: $('#repform').serialize(),
+            dataType: 'json'
+            });
+            request.done(function(data) {
+                console.log(data);
+            });
+            
+        });
+      
+  </script>
+@endsection

@@ -1,0 +1,35 @@
+@layout('layouts.app')
+
+@section('content')
+<div class="container-fluid">
+        <div id="content-wrapper">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h2>Modification d'un statut client</h2>
+                </div>
+                <div class="card-body">
+                <form action="/statut_client/{{statut_client.id}}?_method=PUT" method="post">
+                          {{ csrfField() }}
+                         
+
+                          @if(flashMessage('error'))
+                            
+                          @endif
+                          @each(statut in statut_client)
+                          <div class="form-group">
+                                <label for="id"></label>
+                                <input type="text" name="id" id="id" class="form-control" value="{{statut.id}}" readonly>
+                            </div>
+                          <div class="form-group">
+                                  <label for="nom"></label>
+                          <input type="text" name="nom" id="nom" class="form-control" value="{{statut.nom}}">
+                          </div>
+                          @endeach
+                          <button class="btn btn-primary" type="submit">Enregistrer</button>
+                          <a class="btn btn-secondary" href="{{route('statut_clients.list')}}">Annuler</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
