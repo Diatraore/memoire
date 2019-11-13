@@ -7,7 +7,7 @@ class StatutClientSchema extends Schema {
   up () {
     this.create('statut_clients', (table) => {
       table.increments()
-      table.string('nom',50).notNullable().unique()
+      table.string('nom',50).notNullable()
       table.timestamps()
     })
   }

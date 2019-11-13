@@ -14,12 +14,12 @@
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
-const Route = use('Route')
+const Route = use('Route');
 
 
-Route.on('/hello').render('welcome')
+Route.on('/hello').render('welcome');
 
-Route.on('/').render('layouts.app')
+Route.get('/', 'DasboardController.index').as('index.list');
 
 Route.get('/categories', 'CategorieController.index').as('categories.list')
 Route.get('/categorie/new', 'CategorieController.create').as('categorie.create')
