@@ -10,7 +10,10 @@
             </li>
             <li class="breadcrumb-item active">categories</li>
           </ol>
-        <a href="{{route('categorie.create')}}" class="btn btn-primary">+ Categorie</a>
+          @if(flashMessage('notification'))
+          <div class="alert alert-success"> {{ flashMessage('notification') }} </div>
+                        @endif
+        <a href="{{route('categorie.create')}}" class="btn btn-primary">Ajouter une Categorie</a>
           
           <div class="card mb-3">
             <div class="card-header">
@@ -20,7 +23,7 @@
             
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table id="example" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>Id</th>
@@ -35,7 +38,7 @@
                                     <td>{{cat.nom}}</td>
                                 <td>
                                     <a class="btn btn-primary" href="/categorie/{{cat.id}}/edit">Modifier</a>
-                                    <a class="btn btn-danger" href="/categorie/{{cat.id}}/delete">Supprimer</a>
+                                    <a class="btn btn-danger" data-supp="/categorie/{{cat.id}}/delete" href="#"><i class="fas fa-fw fa-trash">Supprimer</i></a>
                                 </td>
                                 
                                 </tr>
@@ -48,4 +51,27 @@
       </div>
     </div>
     @endsection
+    @section('script')
+        <script>
+            $(document).ready(function () {
+                $('#example')
+                .on('click', '.btn-danger[data-supp]', function(e) {
+                    e.preventDefault();
+                    var url = $(this).data('supp');
+                    
+                    if (confirm('voulez vous supprimer cette catégorie ?')) {
+                        $.ajax({
+                            url: url,
+                            type: 'GET',
+                            dataType: 'json',
+                            data: {method: '_DELETE', submit: true}
+                        }).always(function(data) {
+                            console.log(data)
+                            window.location.replace("/categories")
+                        });
 
+                    }
+                });
+            });
+        </script>
+    @endsection

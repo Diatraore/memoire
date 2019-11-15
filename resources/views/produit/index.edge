@@ -10,7 +10,10 @@
             </li>
             <li class="breadcrumb-item active">produits</li>
           </ol>
-        <a href="{{route('produit.create')}}" class="btn btn-primary">+ Produit</a>
+          @if(flashMessage('notification'))
+          <div class="alert alert-success"> {{ flashMessage('notification') }} </div>
+                        @endif
+        <a href="{{route('produit.create')}}" class="btn btn-primary">Ajouter un Produit</a>
           
           <div class="card mb-3">
             <div class="card-header">
@@ -21,7 +24,7 @@
             <div class="card-body">
                 <div class="table-responsive">
                 @if(produits)
-                    <table class="table table-bordered">
+                    <table id="example" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>Id</th>
@@ -43,8 +46,8 @@
                                         <td>{{prod.prix}}</td>
                                         <td>{{prod.categorie}}</td>
                                     <td>
-                                        <a class="btn btn-primary" href="/produit/{{prod.id}}/edit">Modifier</a>
-                                        <a class="btn btn-danger" href="/produit/{{prod.id}}/delete">Supprimer</a>
+                                        <a class="btn btn-primary" href="/produit/{{prod.id}}/edit"><i class="fas fa-fw fa-edit"></i></a>
+                                        <a class="btn btn-danger " data-supp="/produit/{{prod.id}}/delete" href="#"><i class="fas fa-fw fa-trash"></i></a>
                                     </td>
                                     
                                     </tr>
@@ -62,3 +65,26 @@
     </div>
     @endsection
 
+    @section('script')
+    <script>
+        $(document).ready(function () {
+            $('#example').on('click', '.btn-danger[data-supp]', function(e) {
+                e.preventDefault();
+                var url = $(this).data('supp');
+                
+                if (confirm('voulez vous supprimer ce produit?')) {
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {method: '_DELETE', submit: true}
+                    }).always(function(data) {
+                        
+                        window.location.replace("/produits")
+                    });
+
+                }
+            });
+        });
+    </script>
+@endsection

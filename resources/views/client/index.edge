@@ -10,7 +10,10 @@
             </li>
             <li class="breadcrumb-item active">Clients</li>
           </ol>
-        <a href="{{route('client.create')}}" class="btn btn-primary">+ Client</a>
+          @if(flashMessage('notification'))
+            <div class="alert alert-success"> {{ flashMessage('notification') }} </div>
+          @endif
+        <a href="{{route('client.create')}}" class="btn btn-primary">Ajouter un Client</a>
           
           <div class="card mb-3">
             <div class="card-header">
@@ -20,7 +23,7 @@
             
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table id="example" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>Id</th>
@@ -43,9 +46,11 @@
                                     <td>{{cli.adr}}</td>
                                     <td>{{cli.web}}</td>
                                     <td>{{cli.statut}}</td>
-                                <td>
-                                    <a class="btn btn-primary" href="/client/{{cli.id}}/edit">Modifier</a>
-                                    <a class="btn btn-danger" href="/client/{{cli.id}}/delete">Supprimer</a>
+                                <td class="text-right">
+                                  <div class="btn-group flex-btn-group-container">
+                                    <a class="btn btn-primary btn-small btn-rounded " style="padding:15px 15px; margin: 5px;" href="/client/{{cli.id}}/edit">Modifier</a>
+                                    <a class="btn btn-danger btn-small btn-rounded "style="padding:15px 15px; margin: 5px;"  data-supp="/client/{{cli.id}}/delete" href="#">Supprimer</a>
+                                  </div>
                                 </td>
                                 
                                 </tr>
@@ -58,4 +63,26 @@
       </div>
     </div>
     @endsection
+    @section('script')
+        <script>
+            $(document).ready(function () {
+                $('#example').on('click', '.btn-danger[data-supp]', function(e) {
+                    e.preventDefault();
+                    var url = $(this).data('supp');
+                    
+                    if (confirm('voulez vous supprimer ce client ?')) {
+                        $.ajax({
+                            url: url,
+                            type: 'GET',
+                            dataType: 'json',
+                            data: {method: '_DELETE', submit: true}
+                        }).always(function(data) {
+                            
+                            window.location.replace("/clients")
+                        });
 
+                    }
+                });
+            });
+        </script>
+    @endsection

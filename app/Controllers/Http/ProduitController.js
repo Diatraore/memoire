@@ -36,7 +36,8 @@ class ProduitController {
        // console.log(data)
        await Database.table('produits')
                     .insert({nom: data.nom,desc: data.description, prix: data.prix, categorie_id: data.categorie })
-       return response.redirect('/produits')
+                    session.flash({ notification: 'Le produit a été enregistré!' })
+                   return response.redirect('/produits')
      }
  
      async edit({ view,params }){
@@ -63,7 +64,7 @@ class ProduitController {
             // console.log(data)
              
           await Database.table('produits').where('id',data.id ).update({ nom: data.nom,desc: data.description, prix: data.prix, categorie_id: data.categorie })
-           
+          session.flash({ notification: 'Le produit a été modifié!' })
            return response.redirect('/produits')
      }
  async delete({ params, response }){

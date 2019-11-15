@@ -5,7 +5,7 @@ const { validateAll } = use('Validator')
 class RepresentantController {
 
   async index ({view }){
-       
+      
     const representants = await Database
       .select('representants.id', 'representants.nom','representants.tel', 'representants.mail','representants.adr ','representants.fonction', 'clients.nom as client')
       .from('representants')
@@ -37,6 +37,7 @@ async store({ session, request, response}) {
    const rep = await Database.table('representants')
                 .insert({nom: data.nom, tel: data.tel, mail: data.mail, adr: data.adr,
                    fonction: data.fonction, client_id: data.client })
+                   session.flash({ notification: 'Representant enregistré!' })
                   return response.json(rep)
    //return response.redirect('/representants')
  }
@@ -44,7 +45,7 @@ async store({ session, request, response}) {
  async createRepresentant({request, response}){
    let data = request.all();
    let focus = await Database.table("representants").insert({nom: data.nom, tel: data.telephone, mail: data.mail, adr: data.adr, fonction: data.fonction, client_id: parseInt(data.client,10)})
-   return response.redirect(`/client/${data.id}/edit`)
+   return response.redirect(`/client/${data.client}/edit`);
   }
 
  async edit({ view,params }){
@@ -72,6 +73,7 @@ async store({ session, request, response}) {
          
       await Database.table('representants').where('id',data.id ).update({ nom: data.nom, tel: data.tel, mail: data.mail, adr: data.adr, fonction: data.fonction})
        const client = await Database.table('representants').where('id',data.id );
+       
        return response.redirect(`/client/${client[0].client_id}/edit`)
  }
 async delete({ params, response }){

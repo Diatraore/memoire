@@ -10,7 +10,10 @@
             </li>
             <li class="breadcrumb-item active">Statut client</li>
           </ol>
-        <a href="{{route('statut_client.create')}}" class="btn btn-primary">+ statut</a>
+          @if(flashMessage('notification'))
+            <div class="alert alert-success"> {{ flashMessage('notification') }} </div>
+          @endif
+        <a href="{{route('statut_client.create')}}" class="btn btn-primary">Aouter un statut</a>
           
           <div class="card mb-3">
             <div class="card-header">
@@ -20,7 +23,7 @@
             
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="example">
                             <thead>
                                 <tr>
                                     <th>Id</th>
@@ -34,8 +37,8 @@
                                     <td>{{statut.id}}</td>
                                     <td>{{statut.nom}}</td>
                                 <td>
-                                    <a class="btn btn-primary" href="/statut_client/{{statut.id}}/edit">Modifier</a>
-                                    <a class="btn btn-danger" href="/statut_client/{{statut.id}}/delete">Supprimer</a>
+                                    <a class="btn btn-primary" href="/statut_client/{{statut.id}}/edit"><i class="fas fa-fw fa-edit"></i></a>
+                                    <a class="btn btn-danger" data-supp="/statut_client/{{statut.id}}/delete" href="#"><i class="fas fa-fw fa-trash"></i></a>
                                 </td>
                                 
                                 </tr>
@@ -48,4 +51,27 @@
       </div>
     </div>
     @endsection
+    @section('script')
+    <script>
+        $(document).ready(function () {
+            $('#example').on('click', '.btn-danger[data-supp]', function(e) {
+                e.preventDefault();
+                var url = $(this).data('supp');
+                
+                if (confirm('voulez vous supprimer ce statut ?')) {
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {method: '_DELETE', submit: true}
+                    }).always(function(data) {
+                        
+                        window.location.replace("/statut_clients")
+                    });
+
+                }
+            });
+        });
+    </script>
+@endsection
 

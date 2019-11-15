@@ -14,6 +14,7 @@ class CategorieController {
     }
 
     create({view}) {
+
         return view.render('categorie.create')
     }
 
@@ -33,6 +34,7 @@ class CategorieController {
       }
 
       await Database.table('categories').insert({nom: data.nom})
+      session.flash({ notification: 'La catégorie a été renseignée!' })
       return response.redirect('/categories')
     }
 
@@ -60,14 +62,13 @@ class CategorieController {
             console.log(params)
             
          await Database.table('categories').where('id',data.id ).update({ nom: data.nom  })
-          
+         session.flash({ notification: 'La catégorie a été modifié!' })
           return response.redirect('/categories')
     }
 async delete({ params, response }){
      await Database.table('categories').where('id',params.id ).delete()
      return response.redirect('/categories')
 }
-
 }
 
 module.exports = CategorieController

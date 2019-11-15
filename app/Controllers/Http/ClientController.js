@@ -37,7 +37,7 @@ class ClientController {
      const id = await Database.table('clients').insert({nom: data.nom, tel: data.tel, mail: data.mail, adr: data.adresse, web: data.web, statut_id: data.statut_client})
      const client = await Database.from('clients').where('id',id[0] )
      const statut_clients = await Database.table('statut_clients').select('*')
-     
+     session.flash({ notification: 'le client a été enregistré!' })
      return view.render('client.edit', {client: client, statut_clients: statut_clients})
      
   }
@@ -68,7 +68,7 @@ class ClientController {
           console.log(params)
           
        await Database.table('clients').where('id',data.id ).update({ nom: data.nom, tel: data.telephone, mail: data.mail, adr: data.adresse_localisation, web: data.site_web, statut_id: data.statut_client  })
-        
+       session.flash({ notification: 'les coordonnées du client ont été!' })
         return response.redirect('/clients')
   }
 async delete({ params, response }){

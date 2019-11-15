@@ -39,6 +39,7 @@ class RendezVousController {
     const rdv = await Database.table('rendez_vous').insert({ date_heure: data.date_heure, lieu: data.lieu,
        client_id: data.client})
        //console.log(rdv)
+       session.flash({ notification: 'Rendez vous enregistré!' })
      return response.route('rendez_vous.list')
   
   }
@@ -69,7 +70,7 @@ async edit({ view,params }){
           console.log(params)
           
        await Database.table('rendez_vous').where('id',data.id ).update({date_heure: data.date_heure, lieu: data.lieu, client_id: data.client })
-        
+       session.flash({ notification: 'Rendez vous modifié!' })
         return response.redirect('/rendez-vous')
   }
 async delete({ params, response }){

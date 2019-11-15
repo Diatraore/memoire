@@ -10,7 +10,10 @@
             </li>
             <li class="breadcrumb-item active">Rendez-vous</li>
           </ol>
-        <a href="{{route('rendez_vous.create')}}" class="btn btn-primary">+ Rendez-vous</a>
+          @if(flashMessage('notification'))
+            <div class="alert alert-success"> {{ flashMessage('notification') }} </div>
+          @endif
+        <a href="{{route('rendez_vous.create')}}" class="btn btn-primary">Ajouter un Rendez-vous</a>
           
           <div class="card mb-3">
             <div class="card-header">
@@ -21,7 +24,7 @@
             <div class="card-body">
                 <div class="table-responsive">
                 @if(rendez_vous)
-                    <table class="table table-bordered">
+                    <table id="example" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>Id</th>
@@ -42,8 +45,8 @@
                                         <td>{{rdv.lieu}}</td>
                                         <td>{{rdv.client}}</td>
                                     <td>
-                                        <a class="btn btn-primary" href="/rdv/{{rdv.id}}/edit">Modifier</a>
-                                        <a class="btn btn-danger" href="/rdv/{{rdv.id}}/delete">Supprimer</a>
+                                        <a class="btn btn-primary" href="/rdv/{{rdv.id}}/edit"><i class="fas fa-fw fa-edit"></i></a>
+                                        <a class="btn btn-danger" data-supp="/rdv/{{rdv.id}}/delete" href="#"><i class="fas fa-fw fa-trash"></i></a>
                                     </td>
                                     
                                     </tr>
@@ -60,4 +63,28 @@
       </div>
     </div>
     @endsection
+    @section('script')
+    <script>
+        $(document).ready(function () {
+            $('#example').on('click', '.btn-danger[data-supp]', function(e) {
+                e.preventDefault();
+                var url = $(this).data('supp');
+                //console.log(url)
+                if (confirm('voulez vous supprimer ce rendez-vous ?')) {
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {method: '_DELETE', submit: true}
+                    }).always(function(data) {
+                        console.log(data);
+                        window.location.replace("/rendez-vous")
+                    }).fail(function(error) {
+                        console.log(error);
+                    });
 
+                }
+            });
+        });
+    </script>
+@endsection

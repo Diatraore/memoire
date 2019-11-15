@@ -19,7 +19,6 @@ const Route = use('Route')
 
 Route.on('/hello').render('welcome')
 
-Route.on('/').render('layouts.app')
 
 Route.get('/categories', 'CategorieController.index').as('categories.list')
 Route.get('/categorie/new', 'CategorieController.create').as('categorie.create')
@@ -42,6 +41,7 @@ Route.get('/statut_client/:id/edit', 'StatutClientController.edit').as('statut_c
 Route.put('/statut_client/:id', 'StatutClientController.update')
 Route.get('/statut_client/:id/delete', 'StatutClientController.delete')
 
+
 Route.get('/clients', 'ClientController.index').as('clients.list')
 Route.get('/client/new', 'ClientController.create').as('client.create')
 Route.post('/client', 'ClientController.store')
@@ -51,11 +51,10 @@ Route.get('/client/:id/delete', 'ClientController.delete')
 Route.get('/representant/:id/delete', 'RepresentantController.delete')
 Route.get('/representant/:id/edit', 'RepresentantController.edit').as('representant.edit')
  Route.put('/representant/:id', 'RepresentantController.update')
-
  Route.get('/representants', 'ClientController.index').as('clients.list')
 // Route.get('/representant/new', 'RepresentantController.create').as('representant.create')
 Route.post('/representant', 'RepresentantController.createRepresentant')
-// Route.get('/representant/:id/edit', 'RepresentantController.edit').as('representant.edit')
+//"" Route.get('/representant/:id/edit', 'RepresentantController.edit').as('representant.edit')
 // Route.put('/representant/:id', 'RepresentantController.update')
 // Route.get('/representant/:id/delete', 'RepresentantController.delete')
 

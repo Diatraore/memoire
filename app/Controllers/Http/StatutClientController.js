@@ -30,6 +30,7 @@ class StatutClientController {
        }
  
        await Database.table('statut_clients').insert({nom: data.nom})
+       session.flash({ notification: 'statut client enregistré!' })
        return response.redirect('/statut_clients')
      }
  
@@ -57,7 +58,7 @@ class StatutClientController {
              console.log(params)
              
           await Database.table('statut_clients').where('id',data.id ).update({ nom: data.nom  })
-           
+          session.flash({ notification: 'statut client modifié!' })
            return response.redirect('/statut_clients')
      }
  async delete({ params, response }){
