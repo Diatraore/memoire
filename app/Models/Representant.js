@@ -4,6 +4,7 @@
 const Model = use('Model')
 
 class Representant extends Model {
+    
 }
 
 module.exports = Representant

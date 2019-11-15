@@ -1,0 +1,89 @@
+@layout('layouts.app')
+
+
+    @section('content')
+    <div class="container-fluid">
+      <div id="content-wrapper">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="#">Liste</a>
+            </li>
+            <li class="breadcrumb-item active">Utilisateurs</li>
+          </ol>
+          @if(flashMessage('notification'))
+          <div class="alert alert-success"> {{ flashMessage('notification') }} </div>
+         @endif
+                        @if(user != 2)
+                            <a href="{{route('utilisateur.create')}}" class="btn btn-primary">Ajouter un utilisateur</a>
+                        @endif
+          
+          <div class="card mb-3">
+            <div class="card-header">
+                <i class="fas fa-table"></i>
+                
+            </div>
+            
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="example" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nom</th>
+                                    <th>Email</th>
+                                    <th>Téléphone</th>
+                                    <th>Fonction</th>
+                                    <th>Mot de passe</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @each(util in users)
+                                <tr>
+                                    <td>{{util.id}}</td>
+                                    <td>{{util.username}}</td>
+                                    <th>{{util.email}}</th>
+                                    <th>{{util.tel}}</th>
+                                    <th>{{util.fonction}}</th>
+                                    <th>{{util.password}}</th>
+                                <td>
+                                        @if(user != 2)
+                                        <a class="btn btn-primary" href="/utilisateur/{{util.id}}/edit"><i class="fas fa-fw fa-edit"></i></a>
+                                        <a class="btn btn-danger" data-supp="/utilisateur/{{util.id}}/delete" href="#"><i class="fas fa-fw fa-trash"></i></a>
+                                        @endif
+                                </td>
+                                
+                                </tr>
+                                @endeach
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    @endsection
+    @section('script')
+        <script>
+            $(document).ready(function () {
+                $('#example')
+                .on('click', '.btn-danger[data-supp]', function(e) {
+                    e.preventDefault();
+                    var url = $(this).data('supp');
+                    
+                    if (confirm('voulez vous supprimer un utilisateur?')) {
+                        $.ajax({
+                            url: url,
+                            type: 'GET',
+                            dataType: 'json',
+                            data: {method: '_DELETE', submit: true}
+                        }).always(function(data) {
+                            console.log(data)
+                            window.location.replace("/users")
+                        });
+
+                    }
+                });
+            });
+        </script>
+    @endsection

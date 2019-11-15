@@ -18,9 +18,10 @@
           <a class="dropdown-item" href="{{route('statut_clients.list') }}">Statut client</a>
           <a class="dropdown-item" href="{{ route('categories.list') }}">Catégorie produit</a>
           <a class="dropdown-item" href="{{ route('produits.list') }}"> Produits</a>
+          
         
         </div>
-      </li>
+      </li>  
       
       <li class="nav-item">
         <a class="nav-link" href="{{route('clients.list') }}">
@@ -32,4 +33,9 @@
           <i class="fas fa-fw fa-calendar-alt"></i>
           <span>Rendez-vous</span></a>
       </li>
+      <li class="nav-item">
+          <a class="nav-link" href="{{ route('users.list') }}">
+            <i class="fas fa-fw fa-user-alt"></i>
+            <span>Utilisateurs</span></a>
+        </li>
     </ul>

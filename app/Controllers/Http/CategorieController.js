@@ -1,7 +1,6 @@
 
 'use strict'
 
-
 const Database = use('Database')
 const { validateAll } = use('Validator')
 
