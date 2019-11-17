@@ -20,8 +20,9 @@ const Route = use('Route');
 Route.on('/hello').render('welcome').middleware('auth');
 
 Route.get('/', 'DasboardController.index').as('index.list').middleware('auth');
-Route.get('/login','UserController.index')
+Route.get('/login','UserController.connection')
 Route.post('/login', 'UserController.login')
+Route.get('/logout', 'UserController.logout').as('logout.active')
 
 
 Route.get('/categories', 'CategorieController.index').as('categories.list').middleware('auth')

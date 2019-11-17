@@ -10,7 +10,8 @@ class RendezVousController {
       .leftJoin('clients', 'clients.id', 'rendez_vous.client_id');
 
       for(let i in rendez_vous){
-        rendez_vous[i].nadiaDate = new Date(rendez_vous[i].date_heure).toLocaleString("fr-FR");
+        console.log(new Date(rendez_vous[i].date_heure).toLocaleString("fr-FR", { hour12: false }));
+        rendez_vous[i].nadiaDate = new Date(rendez_vous[i].date_heure).toLocaleString("fr-FR", { hour12: false });
       }
      // return rendez_vous
   return view.render('rendez_vous.index', { rendez_vous: rendez_vous})
@@ -55,20 +56,6 @@ async edit({ view,params }){
   async update({ request, params, response, session }){
      // const data = request.only(['nom'])
      const data = request.all()
-      const validation = await validateAll(data, {
-        date_heure: 'required',
-         
-        })
-
-        if(validation.fails()) {
-          session
-          .withErrors(validation.messages())
-          .flashAll()
-          return response.redirect('back')
-        }
-          console.log(data)
-          console.log(params)
-          
        await Database.table('rendez_vous').where('id',data.id ).update({date_heure: data.date_heure, lieu: data.lieu, client_id: data.client })
        session.flash({ notification: 'Rendez vous modifié!' })
         return response.redirect('/rendez-vous')

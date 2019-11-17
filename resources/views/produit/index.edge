@@ -13,7 +13,7 @@
           @if(flashMessage('notification'))
           <div class="alert alert-success"> {{ flashMessage('notification') }} </div>
                         @endif
-        <a href="{{route('produit.create')}}" class="btn btn-primary">Ajouter un Produit</a>
+        <a href="{{route('produit.create')}}" class="btn btn-outline-amber">Ajouter un Produit</a>
           
           <div class="card mb-3">
             <div class="card-header">
@@ -46,11 +46,32 @@
                                         <td>{{prod.prix}}</td>
                                         <td>{{prod.categorie}}</td>
                                     <td>
-                                        <a class="btn btn-primary" href="/produit/{{prod.id}}/edit"><i class="fas fa-fw fa-edit"></i></a>
-                                        <a class="btn btn-danger " data-supp="/produit/{{prod.id}}/delete" href="#"><i class="fas fa-fw fa-trash"></i></a>
+                                        <a class="btn btn-outline-amber" href="/produit/{{prod.id}}/edit"><i class="fas fa-fw fa-edit"></i></a>
+                                        <a class="btn btn-outline-danger" data-toggle="modal" data-target="#bd-example-modal-sm{{prod.id}}"><i class="fas fa-fw fa-trash"></i></a>
                                     </td>
                                     
                                     </tr>
+                                    <div class="modal fade" id="bd-example-modal-sm{{prod.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+                                        <div class="modal-dialog modal-sm"  role="document">
+                                      
+                                      
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                  <p>Voulez vous vraiment supprimer le produit {{prod.nom}} ?</p>
+                                              </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Non</button>
+                                              <a href="/produit/{{prod.id}}/delete" type="button" class="btn btn-primary btn-sm">Oui</a>
+                                          </div>
+                                          </div>
+                                        </div>
+                                      </div>
                                     @endeach
                                     
                                 </tbody>         
@@ -65,26 +86,3 @@
     </div>
     @endsection
 
-    @section('script')
-    <script>
-        $(document).ready(function () {
-            $('#example').on('click', '.btn-danger[data-supp]', function(e) {
-                e.preventDefault();
-                var url = $(this).data('supp');
-                
-                if (confirm('voulez vous supprimer ce produit?')) {
-                    $.ajax({
-                        url: url,
-                        type: 'GET',
-                        dataType: 'json',
-                        data: {method: '_DELETE', submit: true}
-                    }).always(function(data) {
-                        
-                        window.location.replace("/produits")
-                    });
-
-                }
-            });
-        });
-    </script>
-@endsection

@@ -8,7 +8,7 @@
                     <h2>Modification un rendez-vous</h2>
                 </div>
                 <div class="card-body">
-                <form action="/rendez_vous/{{rendez_vous.id}}?_method=PUT" method="post">
+                <form action="/rdv/{{rendez_vous.id}}?_method=PUT" method="post">
 
                           {{ csrfField() }}
                          
@@ -35,9 +35,9 @@
                                 <select class="form-control" name="client" id="client">
                                         @each(cli in clients)
                                         @if(cli.id == rendez_vous.client_id)
-                                <option value="{{cli.id}}" selected="selected">{{cli.nom}}| {{rendez_vous.client_id}} || {{cli.id}}</option>
+                                <option value="{{cli.id}}" selected="selected">{{cli.nom}}</option>
                                         @else
-                                        <option value="{{cli.id}}" >{{cli.nom}}| {{rendez_vous.client_id}} || {{cli.id}}</option>
+                                        <option value="{{cli.id}}" >{{cli.nom}}</option>
                                         @endif
                                     @endeach
                                 </select>

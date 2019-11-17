@@ -13,7 +13,7 @@
           @if(flashMessage('notification'))
             <div class="alert alert-success"> {{ flashMessage('notification') }} </div>
           @endif
-        <a href="{{route('statut_client.create')}}" class="btn btn-primary">Aouter un statut</a>
+        <a href="{{route('statut_client.create')}}" class="btn btn-outline-amber">Aouter un statut</a>
           
           <div class="card mb-3">
             <div class="card-header">
@@ -37,11 +37,32 @@
                                     <td>{{statut.id}}</td>
                                     <td>{{statut.nom}}</td>
                                 <td>
-                                    <a class="btn btn-primary" href="/statut_client/{{statut.id}}/edit"><i class="fas fa-fw fa-edit"></i></a>
-                                    <a class="btn btn-danger" data-supp="/statut_client/{{statut.id}}/delete" href="#"><i class="fas fa-fw fa-trash"></i></a>
+                                    <a class="btn btn-outline-amber" href="/statut_client/{{statut.id}}/edit"><i class="fas fa-fw fa-edit"></i></a>
+                                    <a class="btn btn-outline-danger" data-toggle="modal" data-target="#bd-example-modal-sm{{statut.id}}"><i class="fas fa-fw fa-trash"></i></a>
                                 </td>
                                 
                                 </tr>
+                                <div class="modal fade" id="bd-example-modal-sm{{statut.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+                                    <div class="modal-dialog modal-sm"  role="document">
+                                  
+                                  
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                              <p>Voulez vous vraiment supprimer la catégorie {{cat.nom}} ?</p>
+                                          </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Non</button>
+                                          <a href="/statut_client/{{statut.id}}/delete" type="button" class="btn btn-primary btn-sm">Oui</a>
+                                      </div>
+                                      </div>
+                                    </div>
+                                  </div>
                                 @endeach
                             </tbody>
                     </table>

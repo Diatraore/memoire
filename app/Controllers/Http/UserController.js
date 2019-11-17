@@ -1,6 +1,12 @@
 'use strict'
 const Database = use('Database')
 const { validateAll } = use('Validator')
+const Hash = use('Hash')
+const User = use('App/Models/User')
+
+const Encryption = use('Encryption')
+
+
 class UserController {
     async index ({view }){
     const users = await Database.table('users').select('*')
@@ -8,24 +14,26 @@ class UserController {
     return view.render('utilisateur.index', { users: users})
 }
 
-async login ({ request, auth, response }) {
-    try {
-        // validate the user credentials and generate a JWT token
-        const token = await auth.attempt(
-            request.input('email'),
-            request.input('password')
-        )
+async logout({response, auth}){
+    await auth.logout();
+    return response.redirect('/login')
+}
 
-        return response.json({
-            status: 'success',
-            data: token
-        })
-    } catch (error) {
-        response.status(400).json({
-            status: 'error',
-            message: 'Invalid email/password'
-        })
+async login ({ auth, request, response, session }) {
+    const { email, password } = request.all()
+
+    try {
+        const encrypted = Encryption.encrypt(password)
+        let requestHeaders = request.headers()
+
+      const nadia = await auth.attempt(email, password)
+    } catch (e) {
+        console.log(e)
+
+        return response.redirect('login')
     }
+
+    return response.redirect('/')
 }
 
 create({view}) {
@@ -33,11 +41,15 @@ create({view}) {
     return view.render('utilisateur.create')
 }
 
-async store({ session, request, response}) {
+connection({view}){
+    return view.render('dasboard.login')
+}
+
+async store({ session, auth, request, response}) {
 
 const data = request.all()
 const validation = await validateAll(data, {
-    nom: 'required',
+    username: 'required',
    
   })
 
@@ -49,8 +61,10 @@ const validation = await validateAll(data, {
     return response.redirect('/utilisateur/new')
   }
 
-  await Database.table('users').insert({username: data.nom, email: data.mail, tel: data.tel, fonction: data.fonction, password: data.mdp, role: 2})
-  session.flash({ notification: "L'utlisateur a été bien supprimé!" })
+  const user = await User.create({username:data.username,email: data.email,password:data.password,  tel:data.tel, fonction:data.fonction,role:parseInt(data.role,10)})
+
+  /*await Database.table('users').insert({username: data.nom, email: data.mail, tel: data.tel, fonction: data.fonction, password: data.mdp, role: 2})
+  session.flash({ notification: "L'utlisateur a été bien supprimé!" })*/
   return response.redirect('/users')
 }
 

@@ -13,7 +13,7 @@
           @if(flashMessage('notification'))
             <div class="alert alert-success"> {{ flashMessage('notification') }} </div>
           @endif
-        <a href="{{route('rendez_vous.create')}}" class="btn btn-primary">Ajouter un Rendez-vous</a>
+        <a href="{{route('rendez_vous.create')}}" class="btn btn-outline-amber">Ajouter un Rendez-vous</a>
           
           <div class="card mb-3">
             <div class="card-header">
@@ -45,11 +45,32 @@
                                         <td>{{rdv.lieu}}</td>
                                         <td>{{rdv.client}}</td>
                                     <td>
-                                        <a class="btn btn-primary" href="/rdv/{{rdv.id}}/edit"><i class="fas fa-fw fa-edit"></i></a>
-                                        <a class="btn btn-danger" data-supp="/rdv/{{rdv.id}}/delete" href="#"><i class="fas fa-fw fa-trash"></i></a>
+                                        <a class="btn btn-outline-amber" href="/rdv/{{rdv.id}}/edit"><i class="fas fa-fw fa-edit"></i></a>
+                                        <a class="btn btn-outline-danger" data-toggle="modal" data-target="#bd-example-modal-sm{{rdv.id}}"><i class="fas fa-fw fa-trash"></i></a>
                                     </td>
-                                    
                                     </tr>
+                                    <div class="modal fade" id="bd-example-modal-sm{{rdv.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+  <div class="modal-dialog modal-sm"  role="document">
+
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <p>Voulez vous vraiment supprimer le rendez-vous du client {{rdv.client}}</p>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Non</button>
+        <a href="/rdv/{{rdv.id}}/delete" type="button" class="btn btn-primary btn-sm">Oui</a>
+    </div>
+    </div>
+  </div>
+</div>
+                                    
                                     @endeach
                                     
                                 </tbody>         
@@ -63,28 +84,4 @@
       </div>
     </div>
     @endsection
-    @section('script')
-    <script>
-        $(document).ready(function () {
-            $('#example').on('click', '.btn-danger[data-supp]', function(e) {
-                e.preventDefault();
-                var url = $(this).data('supp');
-                //console.log(url)
-                if (confirm('voulez vous supprimer ce rendez-vous ?')) {
-                    $.ajax({
-                        url: url,
-                        type: 'GET',
-                        dataType: 'json',
-                        data: {method: '_DELETE', submit: true}
-                    }).always(function(data) {
-                        console.log(data);
-                        window.location.replace("/rendez-vous")
-                    }).fail(function(error) {
-                        console.log(error);
-                    });
-
-                }
-            });
-        });
-    </script>
-@endsection
+    

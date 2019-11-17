@@ -77,8 +77,9 @@ async store({ session, request, response}) {
        return response.redirect(`/client/${client[0].client_id}/edit`)
  }
 async delete({ params, response }){
+  const client = await Database.table('representants').where('id',params.id );
   await Database.table('representants').where('id',params.id ).delete()
-  return response.redirect('/representants')
+  return response.redirect(`/client/${client[0].client_id}/edit`)
 }
   }
 
