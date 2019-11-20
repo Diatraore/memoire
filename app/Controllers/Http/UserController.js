@@ -8,10 +8,10 @@ const Encryption = use('Encryption')
 
 
 class UserController {
-    async index ({view }){
+    async index ({view,auth }){
     const users = await Database.table('users').select('*')
       
-    return view.render('utilisateur.index', { users: users})
+    return view.render('utilisateur.index', { users: users, me:auth.user})
 }
 
 async logout({response, auth}){
@@ -36,13 +36,13 @@ async login ({ auth, request, response, session }) {
     return response.redirect('/')
 }
 
-create({view}) {
+create({view,auth}) {
 
-    return view.render('utilisateur.create')
+    return view.render('utilisateur.create',{me:auth.user})
 }
 
-connection({view}){
-    return view.render('dasboard.login')
+connection({view,auth}){
+    return view.render('dasboard.login',{me:auth.user})
 }
 
 async store({ session, auth, request, response}) {
@@ -62,23 +62,23 @@ const validation = await validateAll(data, {
   }
 
   const user = await User.create({username:data.username,email: data.email,password:data.password,  tel:data.tel, fonction:data.fonction,role:parseInt(data.role,10)})
-
+  session.flash({ notification: "l'utilisateur enregistré!" })
   /*await Database.table('users').insert({username: data.nom, email: data.mail, tel: data.tel, fonction: data.fonction, password: data.mdp, role: 2})
   session.flash({ notification: "L'utlisateur a été bien supprimé!" })*/
   return response.redirect('/users')
 }
 
-async edit({ view,params }){
+async edit({ view,params,auth }){
     const utilisateur = await Database.from('users').where('id',params.id )
    // return view.render('categorie.edit', JSON.stringify(categorie))
-   return view.render('utilisateur.edit', { utilisateur: utilisateur})
+   return view.render('utilisateur.edit', { utilisateur: utilisateur, me:auth.user})
 }
 
 async update({ request, params, response, session }){
    // const data = request.only(['nom'])
    const data = request.all()
     const validation = await validateAll(data, {
-        nom: 'required',
+        username: 'required',
        
       })
 
@@ -91,7 +91,7 @@ async update({ request, params, response, session }){
         console.log(data)
         console.log(params)
         
-     await Database.table('users').where('id',data.id ).update({ username: data.nom, email: data.mail, tel: data.tel, fonction: data.fonction, password: data.mdp, role: 2 })
+     await Database.table('users').where('id',data.id ).update({ username: data.nom, email: data.mail, tel: data.tel, fonction: data.fonction, password: data.mdp, role:parseInt(data.role,10)})
      session.flash({ notification: "l'utilisateur a été bien modifié!" })
       return response.redirect('/users')
 }

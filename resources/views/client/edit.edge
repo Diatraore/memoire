@@ -22,15 +22,15 @@
                             </div>
                           <div class="form-group">
                                   <label for="nom">Nom</label>
-                          <input type="text" name="nom" id="nom" class="form-control" value="{{cli.nom}}">
+                          <input type="text" name="nom" id="nom" class="form-control" required value="{{cli.nom}}">
                           </div>
                           <div class="form-group">
-                                <label for="telephone">Telephone</label>
-                        <input type="text" name="telephone" id="telephone" class="form-control" value="{{cli.tel}}">
+                                <label for="telephone">Téléphone</label>
+                        <input type="text" name="telephone" id="telephone" class="form-control" required  value="{{cli.tel}}">
                         </div>
                         <div class="form-group">
                                 <label for="mail">Mail</label>
-                        <input type="text" name="Mail" id="Mail" class="form-control" value="{{cli.mail}}">
+                        <input type="text" name="Mail" id="Mail" class="form-control" required value="{{cli.mail}}">
                         </div>
                         <div class="form-group">
                             <label for="web">Site web</label>
@@ -52,16 +52,17 @@
 
                     <fieldset >
                         <hr style="border:1px solid #F2F3F4">
-                        <h4>Representants</h4>
-                            <button type="button" class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">+ Representant</button>
-                        <table class="table table-bordered">
+                        <h4>Représentants</h4>
+                            <button type="button" class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Ajouter un représentant</button>
+                        <br><br>
+                            <table class="table table-bordered">
 
 
                             <thead>
                                 <tr>
                                     <th>Id</th>
                                     <th>Nom</th>
-                                    <th>Telephone</th>
+                                    <th>Téléphone</th>
                                     <th>Mail</th>
                                     <th>Fonction</th>
                                     <th>Client</th>
@@ -75,6 +76,7 @@
                                     <td>{{rep.nom}}</td>
                                     <td>{{rep.tel}}</td>
                                     <td>{{rep.mail}}</td>
+                                    <td>{{rep.adr}}</td>
                                     <td>{{rep.fonction}}</td>
                                     
                                 <td>
@@ -92,7 +94,7 @@
                             <div class="modal-dialog" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">Formulaire representant</h5>
+                                  <h5 class="modal-title" id="exampleModalLabel">Formulaire représentant</h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
@@ -111,7 +113,7 @@
                                               </div>
           
                                               <div class="form-group">
-                                                <label for="tel" class="col-form-label">Telephone:</label>
+                                                <label for="tel" class="col-form-label">Téléphone:</label>
                                                 <input type="text" class="form-control" id="tel" name='telephone'>
                                               </div>
           
@@ -144,26 +146,3 @@
     </div>
 @endsection
 
-@section('script')
-  <script>
-
-      $('#ajaxsubmit').click(function(e) {
-          e.preventDefault();
-        
-          var request = $.ajax({
-          url: '/representant',
-          type: 'post',
-          headers: {
-              'x-csrf-token': $('[name=_csrf]').val()
-            },
-            data: $('#repform').serialize(),
-            dataType: 'json'
-            });
-            request.done(function(data) {
-                console.log(data);
-            });
-            
-        });
-      
-  </script>
-@endsection

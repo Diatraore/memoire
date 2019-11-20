@@ -23,14 +23,14 @@
             
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="example" class="table table-bordered">
+                    <table id="example" class="col-lg-8 col-xm-12 col-md-10 table table-bordered">
                             <thead>
                                 <tr>
                                     <th>Id</th>
                                     <th>Nom</th>
-                                    <th>Telephone</th>
+                                    <th>Téléphone</th>
                                     <th>Mail</th>
-                                    <th>Adresse localisation</th>
+                                    <th>Localisation</th>
                                     <th>Site web</th>
                                     <th>Statut client</th>
                                     <th></th>
@@ -44,7 +44,9 @@
                                     <td>{{cli.tel}}</td>
                                     <td>{{cli.mail}}</td>
                                     <td>{{cli.adr}}</td>
+                                    @if (cli.web != null)            
                                     <td>{{cli.web}}</td>
+                                     @endif             
                                     <td>{{cli.statut}}</td>
                                 <td>
                                     <a class="btn btn-outline-amber"  href="/client/{{cli.id}}/edit"><i class="fas fa-fw fa-edit"></i></a>
@@ -82,7 +84,7 @@
       </div>
     </div>
     @endsection
-    @section('script')
+    {{--  @section('script')
         <script>
             $(document).ready(function () {
                 $('#example').on('click', '.btn-danger[data-supp]', function(e) {
@@ -104,4 +106,20 @@
                 });
             });
         </script>
-    @endsection
+    @endsection  --}}
+    {{--  @section('script')
+    <script>
+        //    var firstname = document.getElementById("firstname").value;
+        $('.form-control').blur(function()
+        {
+         var web = $(this).attr('value');
+         $.ajax({
+           type: "POST",
+           url: "url",
+           data: {'web':web},
+           success: function(msg){
+             alert(msg);
+         
+           }
+         });
+        });    </script>@endsection  --}}

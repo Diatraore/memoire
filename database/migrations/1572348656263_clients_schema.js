@@ -8,7 +8,7 @@ class ClientsSchema extends Schema {
     this.create('clients', (table) => {
       table.increments()
       table.string('nom',50).notNullable()
-      table.integer('tel')
+      table.integer('tel').unique()
       table.string('mail',80).notNullable().unique()
       table.string('adr',80).notNullable()
       table.string('web',30).nullable()

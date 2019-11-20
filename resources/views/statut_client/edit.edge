@@ -21,8 +21,8 @@
                                 <input type="text" name="id" id="id" class="form-control" value="{{statut.id}}" readonly>
                             </div>
                           <div class="form-group">
-                                  <label for="nom"></label>
-                          <input type="text" name="nom" id="nom" class="form-control" value="{{statut.nom}}">
+                                  <label for="nom">Nom</label>
+                          <input type="text" name="nom" id="nom" class="form-control" value="{{statut.nom}}" required>
                           </div>
                           @endeach
                           <button class="btn btn-primary" type="submit">Enregistrer</button>

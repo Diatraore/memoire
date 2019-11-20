@@ -4,19 +4,20 @@ const Database = use('Database')
 const { validateAll } = use('Validator')
 
 class ProduitController {
-    async index ({view }){
+    async index ({view,auth }){
        
         const produits = await Database
             .select('produits.id', 'produits.nom','produits.desc', 'produits.prix', 'categories.nom as categorie')
             .from('produits')
             .leftJoin('categories', 'categories.id', 'produits.categorie_id')
       
-        return view.render('produit.index', { produits: produits})
+        return view.render('produit.index', { produits: produits, me:auth.user})
      }
+     
  
-    async create({view}) {
+    async create({view,auth}) {
         const categories = await Database.table('categories').select('*')
-         return view.render('produit.create', {categories: categories})
+         return view.render('produit.create', {categories: categories, me:auth.user})
      }
  
     async store({ session, request, response}) {
@@ -40,11 +41,11 @@ class ProduitController {
                    return response.redirect('/produits')
      }
  
-     async edit({ view,params }){
+     async edit({ view,params,auth }){
          const produit = await Database.from('produits').where('id',params.id )
          const categories = await Database.table('categories').select('*')
         // return view.render('categorie.edit', JSON.stringify(categorie))
-        return view.render('produit.edit', { produit: produit, categories:categories})
+        return view.render('produit.edit', { produit: produit, categories:categories,me:auth.user})
      }
  
      async update({ request, params, response, session }){

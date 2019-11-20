@@ -5,16 +5,16 @@ const Database = use('Database')
 const { validateAll } = use('Validator')
 
 class CategorieController {
-    async index ({view }){
+    async index ({view,auth }){
        
        const categories = await Database.table('categories').select('*')
       
-        return view.render('categorie.index', { categories: categories})
+        return view.render('categorie.index', { categories: categories, me:auth.user})
     }
 
-    create({view}) {
+    create({view,auth}) {
 
-        return view.render('categorie.create')
+        return view.render('categorie.create',{ me:auth.user})
     }
 
    async store({ session, request, response}) {
@@ -37,10 +37,10 @@ class CategorieController {
       return response.redirect('/categories')
     }
 
-    async edit({ view,params }){
+    async edit({ view,params,auth }){
         const categorie = await Database.from('categories').where('id',params.id )
        // return view.render('categorie.edit', JSON.stringify(categorie))
-       return view.render('categorie.edit', { categorie: categorie})
+       return view.render('categorie.edit', { categorie: categorie, me:auth.use})
     }
 
     async update({ request, params, response, session }){

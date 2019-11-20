@@ -3,15 +3,15 @@
 const Database = use('Database')
 const { validateAll } = use('Validator')
 class StatutClientController {
-    async index ({view }){
+    async index ({view, auth }){
        
         const statut_clients = await Database.table('statut_clients').select('*')
        
-         return view.render('statut_client.index', { statut_clients: statut_clients})
+         return view.render('statut_client.index', { statut_clients: statut_clients, me:auth.user})
      }
  
-    async  create({view}) {
-         return view.render('statut_client.create')
+    async  create({view, auth}) {
+         return view.render('statut_client.create',{me:auth.user})
      }
  
     async store({ session, request, response}) {
@@ -34,10 +34,10 @@ class StatutClientController {
        return response.redirect('/statut_clients')
      }
  
-     async edit({ view,params }){
+     async edit({ view,params,auth }){
          const statut_client = await Database.from('statut_clients').where('id',params.id )
         // return view.render('categorie.edit', JSON.stringify(categorie))
-        return view.render('statut_client.edit', { statut_client: statut_client})
+        return view.render('statut_client.edit', { statut_client: statut_client,me:auth.user})
      }
  
      async update({ request, params, response, session }){

@@ -17,18 +17,22 @@
                             
                           @endif
                           <div class="form-group">
-                                <label for="id">Id</label>
-                                <input type="text" name="id" id="id" class="form-control" value="{{rendez_vous.id}}" readonly>
-                            </div>
+                            <label for="id"></label>
+                            <input type="text" name="id" id="id" class="form-control"  value="{{rendez_vous.id}}" readonly>
+                        </div>
+                        
                           <div class="form-group">
                                   <label for="date_heure">Date et heure</label>
-                          <input type="datetime-local" name="date_heure" id="date_heure" class="form-control" value="{{rendez_vous.nadiaDate}}">
+                          <input type="datetime-local" name="date_heure" id="date_heure" required class="form-control" value="{{rendez_vous.nadiaDate}}">
                           </div>
                           <div class="form-group">
                                 <label for="lieu">Lieu</label>
-                        <input type="text" name="lieu" id="lieu" class="form-control" value="{{rendez_vous.lieu}}">
+                        <input type="text" name="lieu" id="lieu" class="form-control" required value="{{rendez_vous.lieu}}">
                         </div>
-        
+                        <div class="form-group">
+                            <label for="lieu">Motif du rendez-vous</label>
+                            <input type="text" name="motif" id="motif" class="form-control" required value="{{rendez_vous.motif}}">
+                    </div>
 
                         <div class="form-group">
                                 <label for="client">Clients</label>

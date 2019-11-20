@@ -13,7 +13,7 @@
           @if(flashMessage('notification'))
             <div class="alert alert-success"> {{ flashMessage('notification') }} </div>
           @endif
-        <a href="{{route('statut_client.create')}}" class="btn btn-outline-amber">Aouter un statut</a>
+        <a href="{{route('statut_client.create')}}" class="btn btn-outline-amber">Ajouter un statut</a>
           
           <div class="card mb-3">
             <div class="card-header">
@@ -23,7 +23,7 @@
             
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="example">
+                    <table class=" col-lg-8 col-xm-12 col-md-10 table table-bordered" id="example">
                             <thead>
                                 <tr>
                                     <th>Id</th>
@@ -54,7 +54,7 @@
                                           </button>
                                         </div>
                                         <div class="modal-body">
-                                              <p>Voulez vous vraiment supprimer la catégorie {{cat.nom}} ?</p>
+                                              <p>Voulez vous vraiment supprimer le statut {{statut.nom}} ?</p>
                                           </div>
                                         <div class="modal-footer">
                                           <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Non</button>
@@ -72,27 +72,4 @@
       </div>
     </div>
     @endsection
-    @section('script')
-    <script>
-        $(document).ready(function () {
-            $('#example').on('click', '.btn-danger[data-supp]', function(e) {
-                e.preventDefault();
-                var url = $(this).data('supp');
-                
-                if (confirm('voulez vous supprimer ce statut ?')) {
-                    $.ajax({
-                        url: url,
-                        type: 'GET',
-                        dataType: 'json',
-                        data: {method: '_DELETE', submit: true}
-                    }).always(function(data) {
-                        
-                        window.location.replace("/statut_clients")
-                    });
-
-                }
-            });
-        });
-    </script>
-@endsection
-
+   

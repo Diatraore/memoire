@@ -8,7 +8,7 @@
             <li class="breadcrumb-item">
               <a href="#">Liste</a>
             </li>
-            <li class="breadcrumb-item active">Rendez-vous</li>
+            <li class="breadcrumb-item active ">Rendez-vous</li>
           </ol>
           @if(flashMessage('notification'))
             <div class="alert alert-success"> {{ flashMessage('notification') }} </div>
@@ -24,13 +24,14 @@
             <div class="card-body">
                 <div class="table-responsive">
                 @if(rendez_vous)
-                    <table id="example" class="table table-bordered">
+                    <table id="example" class=" col-lg-8 col-xm-12 col-md-10  table table-bordered">
                             <thead>
                                 <tr>
                                     <th>Id</th>
                                     <th>Date et heure</th>
                                     <th>Lieu</th>
                                     <th>Nom du client</th>
+                                    <th>Motif du rendez-vous</th>
                                     
                                     <th></th>
                                 </tr>
@@ -44,6 +45,9 @@
                                         <td>{{rdv.nadiaDate}}</td>
                                         <td>{{rdv.lieu}}</td>
                                         <td>{{rdv.client}}</td>
+                                        <td>{{rdv.motif}}</td>
+
+                                       
                                     <td>
                                         <a class="btn btn-outline-amber" href="/rdv/{{rdv.id}}/edit"><i class="fas fa-fw fa-edit"></i></a>
                                         <a class="btn btn-outline-danger" data-toggle="modal" data-target="#bd-example-modal-sm{{rdv.id}}"><i class="fas fa-fw fa-trash"></i></a>

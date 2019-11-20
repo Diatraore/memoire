@@ -12,21 +12,21 @@
                         {{ csrfField() }}
                         <div class="form-group">
                                 <label for="nom">Nom</label>
-                                <input type="text" name="nom" id="nom" class="form-control">
+                                <input type="text" name="nom" id="nom" class="form-control" required>
                         </div>
                         <div class="form-group">
                                 <label for="description">Description</label>
-                                <input type="text" name="description" id="description" class="form-control">
+                                <input type="text" name="description" id="description" class="form-control" required>
                         </div>
                         <div class="form-group">
                                 <label for="prix">Prix</label>
-                                <input type="text" name="prix" id="prix" class="form-control">
+                                <input type="text" name="prix" id="prix" class="form-control" required>
                         </div>
                        
                     
                        
                         <div class="form-group">
-                                <label for="categorie">categorie</label>
+                                <label for="categorie">Catégorie</label>
                                 <select class="form-control" name="categorie" id="categorie">
                                         @each(cat in categories)
                                     <option value="{{cat.id}}">{{cat.nom}}</option>

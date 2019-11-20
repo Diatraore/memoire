@@ -12,7 +12,7 @@
                         {{ csrfField() }}
                         <div class="form-group">
                                 <label for="nom">Nom</label>
-                                <input type="text" name="nom" id="nom" class="form-control">
+                                <input type="text" name="nom" id="nom" class="form-control" required>
                         </div>
                         <button class="btn btn-primary" type="submit">Enregistrer</button>
                         <a class="btn btn-secondary" href="{{route('statut_clients.list')}}">Annuler</a>

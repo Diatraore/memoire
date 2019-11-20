@@ -10919,18 +10919,21 @@ body.sidebar-toggled footer.sticky-footer {
   }
 }
 
+.ddropdown-item{
+  display: block;
+    width: 100%;
+    padding: 0.25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}
 
 
-
-
-
-
-
-
-/******************
-
-
-position: absolute;
+    /**position: absolute;
     will-change: transform;
     color: rgb(255, 255, 255);
     border: none;

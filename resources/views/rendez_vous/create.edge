@@ -13,12 +13,16 @@
                         {{ csrfField() }}
                         <div class="form-group col-lg-4" id="date">
                                 <label for="date_heure">Date et heure</label>
-                                <input  id="date_heure" type="datetime-local" class="form-control" name="date_heure">
+                                <input  id="date_heure" type="datetime-local" class="form-control" required name="date_heure">
                         </div>
                         <div class="form-group">
                                 <label for="lieu">Lieu</label>
-                                <input type="text" name="lieu" id="lieu" class="form-control">
+                                <input type="text" name="lieu" id="lieu" required class="form-control">
                         </div>
+                        <div class="form-group">
+                            <label for="lieu">Motif du rendez-vous</label>
+                            <input type="textarea" name="motif" id="motif" required class="form-control">
+                    </div>
                         <div class="form-group">
                             <label for="client">Clients</label>
                             <select class="form-control" name="client" id="client">

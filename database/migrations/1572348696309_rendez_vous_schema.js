@@ -9,6 +9,7 @@ class RendezVousSchema extends Schema {
       table.increments()
       table.datetime('date_heure', { precision:6})
       table.string('lieu',80).notNullable()
+      table.string('motif',80).notNullable()
       table.integer('client_id').unsigned().references('id').inTable('clients')
       table.timestamps()
     })
